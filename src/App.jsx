@@ -2,38 +2,18 @@ import React, { useState } from 'react';
 import { Phone, Mail, Sun, Battery, Wrench, Calculator } from 'lucide-react';
 
 const ContactForm = () => {
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-
-    const formData = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      message: e.target.message.value
-    };
-
-    try {
-      const response = await fetch('/.netlify/functions/email-notification', {
-        method: 'POST',
-        body: JSON.stringify({ data: formData }),
-      });
-
-      if (response.ok) {
-        alert('Message sent successfully!');
-        e.target.reset();
-      } else {
-        alert('Failed to send message. Please try again.');
-      }
-    } catch (error) {
-      alert('Failed to send message. Please try again.');
-    }
-    setSubmitting(false);
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form 
+      name="contact" 
+      method="POST" 
+      data-netlify="true" 
+      className="space-y-4"
+      netlify-honeypot="bot-field"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p className="hidden">
+        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+      </p>
       <input
         type="text"
         name="name"
@@ -54,12 +34,8 @@ const ContactForm = () => {
         className="w-full p-2 border rounded h-32"
         required
       />
-      <button 
-        type="submit" 
-        className="bg-yellow-500 text-white px-6 py-2 rounded hover:bg-yellow-600"
-        disabled={submitting}
-      >
-        {submitting ? 'Sending...' : 'Send Message'}
+      <button type="submit" className="bg-yellow-500 text-white px-6 py-2 rounded hover:bg-yellow-600">
+        Send Message
       </button>
     </form>
   );
