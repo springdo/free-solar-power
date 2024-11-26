@@ -7,6 +7,14 @@
     <meta name="description" content="Professional solar panel installation with zero upfront costs. Start saving money on day one with Free Solar Power." />
   </head>
   <body>
+
+    <!-- Hidden form for Netlify -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+    
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
